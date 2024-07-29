@@ -6,11 +6,11 @@
  */
 class Target {
   // constant that defines the size of an target's hitbox
-  static final int radius = 100;
+  static final int TARGET_RADIUS = 100;
   // how long a target will remain in an active state before returning to inactive if it is not hit
-  static final int durationActive = 2000;
+  static final int DURATION_ACTIVE = 2000;
   // how long a target will be displayed as hit before returning to inactive
-  static final int durationHit = 1000;
+  static final int DURATION_HIT = 1000;
   TargetState targetState;
   int points;
   // the timestamp at which the target last became active
@@ -55,7 +55,7 @@ class Target {
     // TODO replace placeholder circle with actual sprites and animations
     switch (this.targetState) {
     case ACTIVE:
-      if ((this.timeActive + durationActive) < millis()) {
+      if ((this.timeActive + DURATION_ACTIVE) < millis()) {
         switchState(TargetState.INACTIVE);
       }
       fill(250, 13, 40);
@@ -64,14 +64,14 @@ class Target {
       fill(120, 120, 120);
       break;
     case HIT:
-      if ((this.timeHit + durationHit) < millis()) {
+      if ((this.timeHit + DURATION_HIT) < millis()) {
         switchState(TargetState.INACTIVE);
       }
       fill(23, 250, 13);
       break;
     }
     ellipseMode(RADIUS);
-    ellipse(position.x, position.y, radius, radius);
+    ellipse(position.x, position.y, TARGET_RADIUS, TARGET_RADIUS);
   }
 
   void switchState(TargetState newState) {
@@ -94,6 +94,6 @@ class Target {
    Determines whether the mouse cursor is within the hitbox of the target
    */
   private boolean isWithinHitbox(PVector mousePosition) {
-    return this.position.dist(mousePosition) < radius;
+    return this.position.dist(mousePosition) < TARGET_RADIUS;
   }
 }

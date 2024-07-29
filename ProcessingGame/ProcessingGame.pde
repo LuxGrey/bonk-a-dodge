@@ -1,9 +1,11 @@
 /**
- Stores the current state of the game in terms of which elements should be drawn and what the current options for interaction are
+ Stores the current state of the game in terms of what should be drawn, what the current options for interaction are and what logic should be run
  */
 GameState gameState;
 MainMenuHandler mainMenuHandler;
 GameplayHandler gameplayHandler;
+EnterNameHandler enterNameHandler;
+HighscoresHandler highscoresHandler;
 
 void setup() {
   size(1500, 1000);
@@ -12,13 +14,16 @@ void setup() {
   // create handlers for different game states
   mainMenuHandler = new MainMenuHandler();
   gameplayHandler = new GameplayHandler();
+  enterNameHandler = new EnterNameHandler();
+  highscoresHandler = new HighscoresHandler();
+
+  highscoresHandler.loadHighscores();
 
   // start the game in the main menu
   gameState = GameState.MAINMENU;
 }
 
 void draw() {
-  // TODO properly implement other cases
   switch(gameState) {
   case MAINMENU:
     mainMenuHandler.render();
@@ -26,12 +31,11 @@ void draw() {
   case GAMEPLAY:
     drawGameplay();
     break;
-  case GAMEOVER:
-    // TODO properly implement game over draw mode
-    background(255);
+  case ENTERNAME:
+    enterNameHandler.render();
     break;
-  default:
-    // TODO remove this case, all cases should be explicitly handled
+  case SHOWHIGHSCORES:
+    highscoresHandler.render();
     break;
   }
 }
@@ -43,8 +47,9 @@ void draw() {
 void drawGameplay() {
   GameState requestedState = gameplayHandler.render();
   switch (requestedState) {
-  case GAMEOVER:
-    gameState = GameState.GAMEOVER;
+  case ENTERNAME:
+    enterNameHandler.init(gameplayHandler.hud.score);
+    gameState = GameState.ENTERNAME;
     break;
   default:
     // do nothing
@@ -53,13 +58,12 @@ void drawGameplay() {
 }
 
 void mousePressed() {
-  // TODO properly implement other cases
   switch(gameState) {
   case GAMEPLAY:
     gameplayHandler.handleMousePressed();
     break;
   case MAINMENU:
-    handleMousePressedMainMenu();
+    mousePressedMainMenu();
     break;
   default:
     // do nothing
@@ -67,13 +71,16 @@ void mousePressed() {
   }
 }
 
-void handleMousePressedMainMenu() {
+void mousePressedMainMenu() {
   // clicking buttons in the main menu causes game state changes
   GameState requestedState = mainMenuHandler.handleMousePressed();
   switch(requestedState) {
   case GAMEPLAY:
     gameplayHandler.init();
     gameState = GameState.GAMEPLAY;
+    break;
+  case SHOWHIGHSCORES:
+    gameState = GameState.SHOWHIGHSCORES;
     break;
   default:
     // do nothing
@@ -82,13 +89,29 @@ void handleMousePressedMainMenu() {
 }
 
 void keyPressed() {
-  // TODO implement proper key press handling
   switch(gameState) {
-     case GAMEOVER:
-       gameState = GameState.MAINMENU;
-       break;
-     default:
-       // do nothing
-       break;
+  case ENTERNAME:
+    keyPressedEnterName();
+    break;
+  case SHOWHIGHSCORES:
+    // return to the main menu upon pressing any key
+    gameState = GameState.MAINMENU;
+    break;
+  default:
+    // do nothing
+    break;
+  }
+}
+
+void keyPressedEnterName() {
+  GameState requestedState = enterNameHandler.handleKeyPressed();
+  switch(requestedState) {
+  case SHOWHIGHSCORES:
+    highscoresHandler.writeHighscore(enterNameHandler.playerName, gameplayHandler.hud.score);
+    gameState = GameState.SHOWHIGHSCORES;
+    break;
+  default:
+    // do nothing
+    break;
   }
 }

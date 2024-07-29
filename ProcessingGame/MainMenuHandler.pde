@@ -3,14 +3,22 @@
  */
 class MainMenuHandler {
   Button startGameplayButton;
+  Button showHighscoresButton;
 
   MainMenuHandler() {
     startGameplayButton = new Button(
-      new PVector(width/2, height/2),
+      new PVector(width/2, 400),
       "Start bonking",
       500,
       70
-      );
+    );
+    
+    showHighscoresButton = new Button(
+      new PVector(width/2, 600),
+      "Show highscores",
+      500,
+      70
+    );
   }
 
   void render() {
@@ -19,6 +27,7 @@ class MainMenuHandler {
     background(120, 120, 120);
 
     startGameplayButton.render();
+    showHighscoresButton.render();
   }
 
   /**
@@ -30,6 +39,8 @@ class MainMenuHandler {
     PVector mousePosition =  new PVector(mouseX, mouseY);
     if (startGameplayButton.isHoveredOver(mousePosition)) {
       return GameState.GAMEPLAY;
+    } else if (showHighscoresButton.isHoveredOver(mousePosition)) {
+      return GameState.SHOWHIGHSCORES;
     }
 
     return GameState.MAINMENU;

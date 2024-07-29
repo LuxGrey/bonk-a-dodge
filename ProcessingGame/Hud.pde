@@ -3,7 +3,7 @@
  which includes the current player score and remaining time.
  */
 class Hud {
-  static final int countdownStartValue = 59;
+  static final int COUNTDOWN_START_VALUE = 59;
 
   int countdown;
   int score;
@@ -14,7 +14,7 @@ class Hud {
    reset this instance to its initial state.
    */
   void init() {
-    countdown = countdownStartValue;
+    countdown = COUNTDOWN_START_VALUE;
     score = 0;
     timeOfLastTick = millis();
   }

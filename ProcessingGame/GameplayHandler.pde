@@ -2,10 +2,10 @@
  Responsible for rendering and processing logic for gameplay
  */
 class GameplayHandler {
-  static final int amountTargets = 9;
-  static final int maxAmountActiveTargets = 5;
+  static final int AMOUNT_TARGETS = 9;
+  static final int MAX_AMOUNT_ACTIVE_TARGETS = 5;
   // the minimal amount of time that has to pass between target activations
-  static final int delayTargetActivation = 500;
+  static final int DELAY_TARGET_ACTIVATION = 500;
 
   Target[] targets;
   Hud hud;
@@ -14,7 +14,7 @@ class GameplayHandler {
   int timeLastTargetActivation;
 
   GameplayHandler() {
-    targets = new Target[amountTargets];
+    targets = new Target[AMOUNT_TARGETS];
     targets[0] = new Target(new PVector(450, 200));
     targets[1] = new Target(new PVector(750, 200));
     targets[2] = new Target(new PVector(1050, 200));
@@ -53,8 +53,8 @@ class GameplayHandler {
 
     // attempt to activate target
     if (
-      amountActiveTargets < maxAmountActiveTargets
-      && (timeLastTargetActivation + delayTargetActivation) < millis()
+      amountActiveTargets < MAX_AMOUNT_ACTIVE_TARGETS
+      && (timeLastTargetActivation + DELAY_TARGET_ACTIVATION) < millis()
       ) {
       int index = (int)random(targets.length);
       if (targets[index].targetState == TargetState.INACTIVE) {
@@ -77,7 +77,7 @@ class GameplayHandler {
     hud.render();
 
     if (hud.countdown <= 0) {
-      return GameState.GAMEOVER;
+      return GameState.ENTERNAME;
     }
 
     return GameState.GAMEPLAY;
