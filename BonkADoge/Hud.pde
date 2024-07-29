@@ -3,7 +3,7 @@
  which includes the current player score and remaining time.
  */
 class Hud {
-  private static final int COUNTDOWN_START_VALUE = 59;
+  private static final int COUNTDOWN_START_VALUE = 90;
 
   int countdown;
   int score;
@@ -29,7 +29,7 @@ class Hud {
    Render current score in upper right corner
    */
   private void renderScore() {
-    textSize(50);
+    textSize(60);
     textAlign(RIGHT, TOP);
     fill(0);
     text(score, width-10, 10);
@@ -39,10 +39,10 @@ class Hud {
    Render countdown in the upper left corner
    */
   private void renderCountdown() {
-    textSize(50);
+    textSize(60);
     textAlign(LEFT, TOP);
     fill(0);
-    text(countdown, 10, 10);
+    text(countdown/60 + ":" + nf(countdown%60, 2), 10, 10);
   }
 
   /**

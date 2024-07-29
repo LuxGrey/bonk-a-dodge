@@ -18,7 +18,7 @@ class Target {
   private static final int MIN_WAIT_ACTIVATION_START = 1000;
   private static final int MAX_WAIT_ACTIVATION_START = 6000;
   // how long a target will remain in an active state before returning to inactive if it is not hit
-  private static final int DURATION_ACTIVE = 2000;
+  private static final int DURATION_ACTIVE = 1000;
   // how long a target will be in a hit state before returning to inactive
   private static final int DURATION_HIT = 500;
 
@@ -150,7 +150,17 @@ class Target {
     }
 
     // always render foreground portion of hole
-    image(BonkADoge.images.holeFront, position.x, position.y);
+    image(BonkADoge.images.holeFront, position.x, position.y);    
+  }
+  
+  /**
+   Should only be used during testing to visualize how big the hit area of a target is
+  */
+  private void drawHitArea() {
+    ellipseMode(CENTER);
+    noFill();
+    stroke(0);
+    ellipse(position.x, position.y, TARGET_RADIUS*2, TARGET_RADIUS*2);
   }
 
   /**

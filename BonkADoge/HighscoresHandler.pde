@@ -14,15 +14,51 @@ class HighscoresHandler {
    */
   void render() {
     background(BonkADoge.images.grassBackground);
+    drawTextBox();
+    drawTitle();
+    drawScores();
+    drawReturnHint();
+  }
 
-    // TODO adjust text color, size and positions
-    //  make left-aligned column for player names and right-aligned column for scores
-    textSize(30);
+  /**
+   Draws a dark transparent text box to provide a background for the text that will allow
+   for better contrast
+   */
+  private void drawTextBox() {
+    fill(0, 170);
+    rectMode(CENTER);
+    rect(width/2, height/2, width*0.6, height*0.95);
+  }
+
+  private void drawTitle() {
+    fill(291, 199, 42);
+    textSize(70);
+    textAlign(CENTER, CENTER);
+    text("Highscores", width/2, 100);
+  }
+
+  private void drawScores() {
+    fill(200);    
+    textSize(40);
     for (int i = 0; i < highscores.getRowCount(); i++) {
       String playerName = highscores.getRow(i).getString(COLUMN_NAME_PLAYER_NAME);
       int score = highscores.getRow(i).getInt(COLUMN_NAME_SCORE);
-      text(playerName + ":" + score, 200, 100+50*i);
+      
+      // left-aligned player name
+      textAlign(LEFT, CENTER);
+      text(playerName, 400, 200 + (i*70));
+      
+      // right-aligned score
+      textAlign(RIGHT, CENTER);
+      text(score, width-400, 200 + (i*70));
     }
+  }
+  
+  private void drawReturnHint() {
+    fill(255);
+    textSize(40);
+    textAlign(CENTER, CENTER);
+    text("Press any key to return to main menu", width/2, height-80);
   }
 
   /**
