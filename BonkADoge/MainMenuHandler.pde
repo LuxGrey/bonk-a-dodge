@@ -4,6 +4,7 @@
 class MainMenuHandler {
   Button startGameplayButton;
   Button showHighscoresButton;
+  Button exitButton;
 
   MainMenuHandler() {
     startGameplayButton = new Button(
@@ -14,8 +15,15 @@ class MainMenuHandler {
     );
 
     showHighscoresButton = new Button(
-      new PVector(width/2, 600),
+      new PVector(width/2, 550),
       "Show highscores",
+      500,
+      70
+    );
+    
+    exitButton = new Button(
+      new PVector(width/2, 700),
+      "Exit",
       500,
       70
     );
@@ -29,6 +37,7 @@ class MainMenuHandler {
 
     startGameplayButton.render();
     showHighscoresButton.render();
+    exitButton.render();
   }
 
   /**
@@ -40,6 +49,8 @@ class MainMenuHandler {
       return GameState.GAMEPLAY;
     } else if (showHighscoresButton.isHoveredOver(mousePosition)) {
       return GameState.SHOWHIGHSCORES;
+    } else if (exitButton.isHoveredOver(mousePosition)) {
+      return GameState.EXITGAME;
     }
 
     // remain in current game state

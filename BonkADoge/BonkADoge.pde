@@ -3,6 +3,7 @@ import netP5.*;
 
 private static final String MESSAGE_BGM_DEFAULT = "bgmDefault";
 private static final String MESSAGE_BGM_GAMEPLAY = "bgmGameplay";
+private static final String MESSAGE_STOP_ALL = "stopAll";
 
 /**
  Allows global access to all required images
@@ -23,7 +24,7 @@ HighscoresHandler highscoresHandler;
 
 /**
  Provide function for sending OSC messages that can be accessed globally
-*/
+ */
 static void sendOscMessage(OscMessage message) {
   osc.send(message, oscRecipientAddress);
 }
@@ -32,12 +33,12 @@ void setup() {
   size(1500, 1000);
   frameRate = 60;
 
-  // create image collection and load images
-  images = new ImageCollection();
-  
   // initialize sound control
   osc = new OscP5(this, 12000);
   oscRecipientAddress = new NetAddress("127.0.0.1", 12345);
+
+  // create image collection and load images
+  images = new ImageCollection();
 
   // create handlers for different game states
   mainMenuHandler = new MainMenuHandler();
@@ -49,7 +50,7 @@ void setup() {
 
   // start the game in the main menu
   gameState = GameState.MAINMENU;
-  
+
   // start default background music
   sendOscMessage(new OscMessage(MESSAGE_BGM_DEFAULT));
 }
@@ -67,6 +68,9 @@ void draw() {
     break;
   case SHOWHIGHSCORES:
     highscoresHandler.render();
+    break;
+  default:
+    // do nothing
     break;
   }
 }
@@ -123,6 +127,9 @@ private void mousePressedMainMenu() {
     // return to the main menu upon clicking anywhere
     gameState = GameState.SHOWHIGHSCORES;
     break;
+  case EXITGAME:
+    // close the program
+    exit();
   default:
     // do nothing
     break;
@@ -159,4 +166,13 @@ private void keyPressedEnterName() {
     // do nothing
     break;
   }
+}
+
+/**
+ Perform clean up when closing the program
+ */
+void exit() {
+  // stop all audio
+  sendOscMessage(new OscMessage(BonkADoge.MESSAGE_STOP_ALL));
+  super.exit();
 }
