@@ -42,7 +42,7 @@ void draw() {
 
 /**
  Draw gameplay and execute gameplay logic.
- Switch to the game over screen when a gameplay round is over.
+ Switch to the "enter name" screen when a gameplay round is over.
  */
 void drawGameplay() {
   GameState requestedState = gameplayHandler.render();
@@ -65,6 +65,8 @@ void mousePressed() {
   case MAINMENU:
     mousePressedMainMenu();
     break;
+  case SHOWHIGHSCORES:
+    gameState = GameState.MAINMENU;
   default:
     // do nothing
     break;

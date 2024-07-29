@@ -6,17 +6,23 @@
  */
 class Target {
   // constant that defines the size of an target's hitbox
-  static final int TARGET_RADIUS = 100;
+  private static final int TARGET_RADIUS = 100;
   // how long a target will remain in an active state before returning to inactive if it is not hit
-  static final int DURATION_ACTIVE = 2000;
+  private static final int DURATION_ACTIVE = 2000;
   // how long a target will be displayed as hit before returning to inactive
-  static final int DURATION_HIT = 1000;
+  private static final int DURATION_HIT = 1000;
+  private static final int MIN_WAIT_ACTIVATION = 2000;
+  private static final int MAX_WAIT_ACTIVATION = 5000;
+  private static final int MIN_WAIT_ACTIVATION_START = 1000;
+  private static final int MAX_WAIT_ACTIVATION_START = 6000;
+  private static final int POINTS_POSITIVE = 100;
+  private static final int POINTS_NEGATIVE = -500;
+
   TargetState targetState;
-  int points;
-  // the timestamp at which the target last became active
-  int timeActive;
-  // the timestamp at which the target was last hit
-  int timeHit;
+  int timeOfLastActivation;
+  int timeOfLastHit;
+  int timeOfNextActivation;
+  boolean isNegativeTarget;
 
   /**
    The position of a target is oriented at its center
@@ -25,7 +31,6 @@ class Target {
 
   Target(PVector position) {
     this.position = position;
-    this.points = 100;
   }
 
   /**
@@ -33,7 +38,9 @@ class Target {
    reset this instance to its initial state.
    */
   void init() {
-    switchState(TargetState.INACTIVE);
+    targetState = TargetState.INACTIVE;
+    isNegativeTarget = false;
+    timeOfNextActivation = millis() + (int)random(MIN_WAIT_ACTIVATION_START, MAX_WAIT_ACTIVATION_START);
   }
 
   /**
@@ -44,46 +51,62 @@ class Target {
     if (this.targetState == TargetState.ACTIVE
       && isWithinHitbox(mousePosition)) {
       // TODO add logic for when target is hit
-      switchState(TargetState.HIT);
+      changeState(TargetState.HIT);
       return true;
     }
 
     return false;
+  }
+  
+  int getPointsForHit() {
+    return isNegativeTarget ? POINTS_NEGATIVE : POINTS_POSITIVE;
   }
 
   void render() {
     // TODO replace placeholder circle with actual sprites and animations
     switch (this.targetState) {
     case ACTIVE:
-      if ((this.timeActive + DURATION_ACTIVE) < millis()) {
-        switchState(TargetState.INACTIVE);
+      if (isNegativeTarget) {
+        fill(40, 115, 232);
+      } else {
+        fill(250, 13, 40);
       }
-      fill(250, 13, 40);
+
+      if ((this.timeOfLastActivation + DURATION_ACTIVE) < millis()) {
+        changeState(TargetState.INACTIVE);
+      }
       break;
     case INACTIVE:
       fill(120, 120, 120);
+      if (this.timeOfNextActivation < millis()) {
+        changeState(TargetState.ACTIVE);
+      }
       break;
     case HIT:
-      if ((this.timeHit + DURATION_HIT) < millis()) {
-        switchState(TargetState.INACTIVE);
-      }
       fill(23, 250, 13);
+      if ((this.timeOfLastHit + DURATION_HIT) < millis()) {
+        changeState(TargetState.INACTIVE);
+      }
       break;
     }
     ellipseMode(RADIUS);
     ellipse(position.x, position.y, TARGET_RADIUS, TARGET_RADIUS);
   }
 
-  void switchState(TargetState newState) {
+  void changeState(TargetState newState) {
     switch (newState) {
     case ACTIVE:
-      this.timeActive = millis();
+      this.timeOfLastActivation = millis();
       break;
     case HIT:
-      this.timeHit = millis();
+      this.timeOfLastHit = millis();
       break;
     case INACTIVE:
-      // no special behavior
+      // prepare for next activation
+
+      // 1 in 10 chance of being negative target
+      isNegativeTarget = (int)random(8) == 0;
+      this.timeOfNextActivation = millis() + (int)random(MIN_WAIT_ACTIVATION, MAX_WAIT_ACTIVATION);
       break;
     }
 

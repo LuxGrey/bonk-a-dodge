@@ -2,16 +2,10 @@
  Responsible for rendering and processing logic for gameplay
  */
 class GameplayHandler {
-  static final int AMOUNT_TARGETS = 9;
-  static final int MAX_AMOUNT_ACTIVE_TARGETS = 5;
-  // the minimal amount of time that has to pass between target activations
-  static final int DELAY_TARGET_ACTIVATION = 500;
+  private static final int AMOUNT_TARGETS = 9;
 
   Target[] targets;
   Hud hud;
-  int amountActiveTargets;
-  // the timestamp at which the target last became active
-  int timeLastTargetActivation;
 
   GameplayHandler() {
     targets = new Target[AMOUNT_TARGETS];
@@ -32,9 +26,6 @@ class GameplayHandler {
    reset this instance to its initial state.
    */
   void init() {
-    timeLastTargetActivation = millis();
-    amountActiveTargets = 0;
-
     for (Target target : targets) {
       target.init();
     }
@@ -51,27 +42,10 @@ class GameplayHandler {
     // TODO draw proper background
     background(120, 120, 120);
 
-    // attempt to activate target
-    if (
-      amountActiveTargets < MAX_AMOUNT_ACTIVE_TARGETS
-      && (timeLastTargetActivation + DELAY_TARGET_ACTIVATION) < millis()
-      ) {
-      int index = (int)random(targets.length);
-      if (targets[index].targetState == TargetState.INACTIVE) {
-        targets[index].switchState(TargetState.ACTIVE);
-        timeLastTargetActivation = millis();
-      }
-    }
-
     // draw targets
-    int activeTargetsCounter = 0;
     for (Target target : targets) {
       target.render();
-      if (target.targetState == TargetState.ACTIVE) {
-        activeTargetsCounter++;
-      }
     }
-    amountActiveTargets = activeTargetsCounter;
 
     // draw HUD
     hud.render();
@@ -87,8 +61,7 @@ class GameplayHandler {
     PVector mouseVector = new PVector(mouseX, mouseY);
     for (Target target : targets) {
       if (target.checkHit(mouseVector)) {
-        amountActiveTargets--;
-        this.hud.score += target.points;
+        this.hud.score += target.getPointsForHit();
 
         // skip checking remaining targets
         break;

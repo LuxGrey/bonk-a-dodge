@@ -1,8 +1,8 @@
 class HighscoresHandler {
-  static final String FILE_NAME_HIGHSCORES = "highscores.csv";
-  static final String COLUMN_NAME_SCORE = "score";
-  static final String COLUMN_NAME_PLAYER_NAME = "playerName";
-  static final int MAX_AMOUNT_HIGHSCORES = 10;
+  private static final String FILE_NAME_HIGHSCORES = "highscores.csv";
+  private static final String COLUMN_NAME_SCORE = "score";
+  private static final String COLUMN_NAME_PLAYER_NAME = "playerName";
+  private static final int MAX_AMOUNT_HIGHSCORES = 10;
 
   Table highscores;
 
