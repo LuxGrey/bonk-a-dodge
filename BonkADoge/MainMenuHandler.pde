@@ -25,8 +25,7 @@ class MainMenuHandler {
    Draws main menu with interactive buttons
    */
   void render() {
-    // TODO draw proper background
-    background(120, 120, 120);
+    background(BonkADoge.images.grassBackground);
 
     startGameplayButton.render();
     showHighscoresButton.render();

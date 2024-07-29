@@ -3,6 +3,7 @@
  and making them available to other classes.
  */
 class ImageCollection {
+  PImage grassBackground;
   PImage targetPositiveMovement;
   PImage targetNegativeMovement;
   PImage targetPositiveFadeout;
@@ -15,6 +16,7 @@ class ImageCollection {
   }
 
   void loadImages() {
+    grassBackground = loadImage("grass_background.png");
     targetPositiveMovement = loadImage("spritesheet_cheems_evil_movement.png");
     targetNegativeMovement = loadImage("spritesheet_cheems_normal_movement.png");
     targetPositiveFadeout = loadImage("spritesheet_cheems_evil_fadeout.png");

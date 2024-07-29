@@ -13,8 +13,7 @@ class HighscoresHandler {
    Display highscores of best players in order.
    */
   void render() {
-    // TODO use proper background
-    background(120, 120, 120);
+    background(BonkADoge.images.grassBackground);
 
     // TODO adjust text color, size and positions
     //  make left-aligned column for player names and right-aligned column for scores

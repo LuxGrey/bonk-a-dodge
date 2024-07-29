@@ -44,8 +44,7 @@ class EnterNameHandler {
    that the player is currently entering.
    */
   void render() {
-    // TODO use proper background
-    background(120, 120, 120);
+    background(BonkADoge.images.grassBackground);
 
     // draw current player name
     textAlign(CENTER, CENTER);

@@ -38,9 +38,7 @@ class GameplayHandler {
    gameplay state.
    */
   GameState render() {
-    // draw background
-    // TODO draw proper background
-    background(120, 120, 120);
+    background(BonkADoge.images.grassBackground);
 
     // draw targets
     for (Target target : targets) {
