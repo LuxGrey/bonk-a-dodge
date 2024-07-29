@@ -4,6 +4,7 @@
  */
 class ImageCollection {
   PImage grassBackground;
+  PImage logo;
   PImage targetPositiveMovement;
   PImage targetNegativeMovement;
   PImage targetPositiveFadeout;
@@ -19,6 +20,7 @@ class ImageCollection {
 
   void loadImages() {
     grassBackground = loadImage("grass_background.png");
+    logo = loadImage("logo.png");
     targetPositiveMovement = loadImage("spritesheet_cheems_evil_movement.png");
     targetNegativeMovement = loadImage("spritesheet_cheems_normal_movement.png");
     targetPositiveFadeout = loadImage("spritesheet_cheems_evil_fadeout.png");

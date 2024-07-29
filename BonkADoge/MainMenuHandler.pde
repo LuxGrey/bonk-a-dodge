@@ -9,14 +9,14 @@ class MainMenuHandler {
 
   MainMenuHandler() {
     startGameplayButton = new Button(
-      new PVector(width/2, 400),
+      new PVector(width/2, 500),
       "Start bonking",
       500,
       70
     );
     
     showHowToPlayButton = new Button(
-      new PVector(width/2, 550),
+      new PVector(width/2, 600),
       "How to play",
       500,
       70
@@ -30,7 +30,7 @@ class MainMenuHandler {
     );
     
     exitButton = new Button(
-      new PVector(width/2, 850),
+      new PVector(width/2, 800),
       "Exit",
       500,
       70
@@ -42,6 +42,9 @@ class MainMenuHandler {
    */
   void render() {
     background(BonkADoge.images.grassBackground);
+    // render logo
+    imageMode(CENTER);
+    image(BonkADoge.images.logo, width/2, 200);
 
     startGameplayButton.render();
     showHowToPlayButton.render();

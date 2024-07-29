@@ -7,7 +7,7 @@ class HowToPlayHandler {
    */
   void render () {
     background(BonkADoge.images.grassBackground);
-    
+
     drawTextBox();
     drawTitle();
     drawExplanation();
@@ -29,19 +29,19 @@ class HowToPlayHandler {
     textAlign(CENTER, CENTER);
     text("How to play", width/2, 100);
   }
-  
+
   private void drawExplanation() {
     textSize(30);
     textAlign(LEFT, CENTER);
     rectMode(CENTER);
-    
+
     // draw game principles explanation
     int textAreaWidth = int(width*0.65);
     fill(200);
     text("Try to earn as many points as possible before the timer runs out.", width/2, 200, textAreaWidth, 50);
     text("Points are earned by hitting (clicking on) evil doges.", width/2, 250, textAreaWidth, 50);
     text("Avoid hitting innocent doges, as hitting them will deduct points.", width/2, 300, textAreaWidth, 50);
-    
+
     // draw target explanations
     imageMode(CENTER);
     textAlign(CENTER, CENTER);
@@ -54,7 +54,7 @@ class HowToPlayHandler {
     image(BonkADoge.images.exampleTargetNegative, rightColumnPosX, 480);
     text("An innocent doge, goodest of boys", rightColumnPosX, 600);
     text("Must not harm", rightColumnPosX, 650);
-    
+
     // draw volume controls explanation
     textAlign(LEFT, CENTER);
     text("By the way, you can adjust the volume at any time using the [UP] and [DOWN] arrow keys.", width/2, 800, textAreaWidth, 100);
