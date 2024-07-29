@@ -21,6 +21,7 @@ MainMenuHandler mainMenuHandler;
 GameplayHandler gameplayHandler;
 EnterNameHandler enterNameHandler;
 HighscoresHandler highscoresHandler;
+VolumeHandler volumeHandler;
 
 /**
  Provide function for sending OSC messages that can be accessed globally
@@ -45,14 +46,15 @@ void setup() {
   gameplayHandler = new GameplayHandler();
   enterNameHandler = new EnterNameHandler();
   highscoresHandler = new HighscoresHandler();
+  volumeHandler = new VolumeHandler();
 
   highscoresHandler.loadHighscores();
+  volumeHandler.sendUpdateVolumeMessage();
+  // start default background music
+  sendOscMessage(new OscMessage(MESSAGE_BGM_DEFAULT));
 
   // start the game in the main menu
   gameState = GameState.MAINMENU;
-
-  // start default background music
-  sendOscMessage(new OscMessage(MESSAGE_BGM_DEFAULT));
 }
 
 void draw() {
@@ -73,6 +75,9 @@ void draw() {
     // do nothing
     break;
   }
+
+  // allow rendering volume gauge in any game state
+  volumeHandler.render();
 }
 
 /**
@@ -149,6 +154,9 @@ void keyPressed() {
     // do nothing
     break;
   }
+
+  // allow changing volume in any game state
+  volumeHandler.handleKeyPressed();
 }
 
 /**

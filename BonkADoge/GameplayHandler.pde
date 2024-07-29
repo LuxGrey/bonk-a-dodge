@@ -66,7 +66,7 @@ class GameplayHandler {
     for (Target target : targets) {
       if (target.checkHit(mouseVector)) {
         this.hud.score += target.getPointsForHit();
-        
+
         String message = target.isNegativeTarget ? MESSAGE_HIT_NEGATIVE : MESSAGE_HIT_POSITIVE;
         BonkADoge.sendOscMessage(new OscMessage(message));
 
@@ -74,7 +74,7 @@ class GameplayHandler {
         return;
       }
     }
-    
+
     // no target was hit
     BonkADoge.sendOscMessage(new OscMessage(MESSAGE_MISS));
   }

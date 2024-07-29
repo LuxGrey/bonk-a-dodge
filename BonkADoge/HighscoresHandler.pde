@@ -38,22 +38,22 @@ class HighscoresHandler {
   }
 
   private void drawScores() {
-    fill(200);    
+    fill(200);
     textSize(40);
     for (int i = 0; i < highscores.getRowCount(); i++) {
       String playerName = highscores.getRow(i).getString(COLUMN_NAME_PLAYER_NAME);
       int score = highscores.getRow(i).getInt(COLUMN_NAME_SCORE);
-      
+
       // left-aligned player name
       textAlign(LEFT, CENTER);
       text(playerName, 400, 200 + (i*70));
-      
+
       // right-aligned score
       textAlign(RIGHT, CENTER);
       text(score, width-400, 200 + (i*70));
     }
   }
-  
+
   private void drawReturnHint() {
     fill(255);
     textSize(40);

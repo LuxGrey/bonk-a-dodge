@@ -148,12 +148,12 @@ class Target {
     }
 
     // always render foreground portion of hole
-    image(BonkADoge.images.holeFront, position.x, position.y);    
+    image(BonkADoge.images.holeFront, position.x, position.y);
   }
-  
+
   /**
    Should only be used during testing to visualize how big the hit area of a target is
-  */
+   */
   private void drawHitArea() {
     ellipseMode(CENTER);
     noFill();
