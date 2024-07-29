@@ -1,19 +1,34 @@
+static final int FRAME_RATE = 60;
+
 /**
  Stores the current state of the game in terms of what should be drawn, what the current options for interaction are and what logic should be run
  */
 GameState gameState;
+
 MainMenuHandler mainMenuHandler;
 GameplayHandler gameplayHandler;
 EnterNameHandler enterNameHandler;
 HighscoresHandler highscoresHandler;
 
+PImage targetPositive;
+PImage targetNegative;
+PImage holeBack;
+PImage holeFront;
+
 void setup() {
   size(1500, 1000);
-  frameRate = 60;
+  frameRate = FRAME_RATE;
+  
+  loadImages();
 
   // create handlers for different game states
   mainMenuHandler = new MainMenuHandler();
-  gameplayHandler = new GameplayHandler();
+  gameplayHandler = new GameplayHandler(
+    holeBack,
+    holeFront,
+    targetPositive,
+    targetNegative
+  );
   enterNameHandler = new EnterNameHandler();
   highscoresHandler = new HighscoresHandler();
 
@@ -116,4 +131,11 @@ void keyPressedEnterName() {
     // do nothing
     break;
   }
+}
+
+void loadImages() {
+  targetPositive = loadImage("spritesheet_cheems_evil.png");
+  targetNegative = loadImage("spritesheet_cheems_normal.png");
+  holeBack = loadImage("hole_back.png");
+  holeFront = loadImage("hole_front.png");
 }

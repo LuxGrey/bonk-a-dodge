@@ -2,22 +2,21 @@
  Responsible for rendering and processing logic for gameplay
  */
 class GameplayHandler {
-  private static final int AMOUNT_TARGETS = 9;
-
+  private static final int AMOUNT_TARGET_ROWS = 3;
+  private static final int AMOUNT_TARGET_COLUMNS = 3;
+  private static final int DISTANCE_TARGETS_HORIZONTAL = 400;
+  private static final int DISTANCE_TARGETS_VERTICAL = 300;
+  
   Target[] targets;
   Hud hud;
 
-  GameplayHandler() {
-    targets = new Target[AMOUNT_TARGETS];
-    targets[0] = new Target(new PVector(450, 200));
-    targets[1] = new Target(new PVector(750, 200));
-    targets[2] = new Target(new PVector(1050, 200));
-    targets[3] = new Target(new PVector(450, 500));
-    targets[4] = new Target(new PVector(750, 500));
-    targets[5] = new Target(new PVector(1050, 500));
-    targets[6] = new Target(new PVector(450, 800));
-    targets[7] = new Target(new PVector(750, 800));
-    targets[8] = new Target(new PVector(1050, 800));
+  GameplayHandler(PImage holeBack, PImage holeFront, PImage targetPositive, PImage targetNegative) {
+    int amountTargets = AMOUNT_TARGET_ROWS * AMOUNT_TARGET_COLUMNS;
+    PVector[] targetPositions = buildTargetPositions();
+    targets = new Target[amountTargets];
+    for (int i = 0; i < targets.length; ++i) {
+      targets[i] = new Target(targetPositions[i], holeBack, holeFront, targetPositive, targetNegative);
+    }
     hud = new Hud();
   }
 
@@ -67,5 +66,42 @@ class GameplayHandler {
         break;
       }
     }
+  }
+  
+  /**
+  Builds an array with the positions of all targets.
+  The positions are calculated based on the amount of rows and columns in the grid of targets
+  as well as the horizontal and vertical distance between targets.
+  The whole grid of targets will be centered in the rendering window.
+  */
+  PVector[] buildTargetPositions() {
+    // calculate x and y coordinates that will be used for target positions
+
+    int[] xCoords = new int[AMOUNT_TARGET_COLUMNS];
+    // start with left most position
+    int startingXCoord = (width/2) - (DISTANCE_TARGETS_HORIZONTAL * (AMOUNT_TARGET_COLUMNS-1) / 2);
+    for (int i = 0; i < xCoords.length; ++i) {
+      xCoords[i] = startingXCoord + (DISTANCE_TARGETS_HORIZONTAL * i);
+    }
+    
+    int[] yCoords = new int[AMOUNT_TARGET_ROWS];
+    // start with top most position
+    int startingYCoord = (height/2) - (DISTANCE_TARGETS_VERTICAL * (AMOUNT_TARGET_ROWS-1) / 2);
+    for (int i = 0; i < yCoords.length; ++i) {
+      yCoords[i] = startingYCoord + (DISTANCE_TARGETS_VERTICAL * i);
+    }
+
+    // build target positions using previously calculated coordinates
+    int amountTargets = AMOUNT_TARGET_ROWS * AMOUNT_TARGET_COLUMNS;
+    PVector[] targetPositions = new PVector[amountTargets];
+    int positionIndex = 0;
+    for (int i = 0; i < xCoords.length; ++i) {
+      for (int j = 0; j < yCoords.length; ++j) {
+        targetPositions[positionIndex] = new PVector(xCoords[i], yCoords[j]);
+        ++positionIndex;
+      }
+    }
+    
+    return targetPositions;
   }
 }
