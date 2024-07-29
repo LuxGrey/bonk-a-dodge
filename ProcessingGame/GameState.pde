@@ -1,4 +1,5 @@
 enum GameState {
   GAMEPLAY,
-  GAMEOVER
+  GAMEOVER,
+  MAINMENU
 }
