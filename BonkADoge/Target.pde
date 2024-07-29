@@ -176,17 +176,30 @@ class Target {
     case INACTIVE:
       // prepare for next activation
 
-      // 1 in 10 chance of being negative target
+      // small chance of being negative target
       isNegativeTarget = (int)random(8) == 0;
+      // 50% chance to use mirrored sprites
+      // this is done to create a bit more variance in target appearance
+      boolean spriteIsMirrored = (int)random(2) == 0;
 
       // determine and cache active sprite sheets once for each activation so that they
       // do no have to be determined repeatedly in the draw loop
       if (isNegativeTarget) {
-        spriteSheetMovement = BonkADoge.images.targetNegativeMovement;
-        spriteSheetFadeout = BonkADoge.images.targetNegativeFadeout;
+        if (spriteIsMirrored) {
+          spriteSheetMovement = BonkADoge.images.targetNegativeMovementMirrored;
+          spriteSheetFadeout = BonkADoge.images.targetNegativeFadeoutMirrored;
+        } else {
+          spriteSheetMovement = BonkADoge.images.targetNegativeMovement;
+          spriteSheetFadeout = BonkADoge.images.targetNegativeFadeout;
+        }
       } else {
-        spriteSheetMovement = BonkADoge.images.targetPositiveMovement;
-        spriteSheetFadeout = BonkADoge.images.targetPositiveFadeout;
+        if (spriteIsMirrored) {
+          spriteSheetMovement = BonkADoge.images.targetPositiveMovementMirrored;
+          spriteSheetFadeout = BonkADoge.images.targetPositiveFadeoutMirrored;
+        } else {
+          spriteSheetMovement = BonkADoge.images.targetPositiveMovement;
+          spriteSheetFadeout = BonkADoge.images.targetPositiveFadeout;
+        }
       }
 
       this.timeOfNextActivation = millis() + (int)random(MIN_WAIT_ACTIVATION, MAX_WAIT_ACTIVATION);
