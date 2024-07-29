@@ -12,6 +12,8 @@ HighscoresHandler highscoresHandler;
 
 PImage targetPositive;
 PImage targetNegative;
+PImage positiveFadeout;
+PImage negativeFadeout;
 PImage holeBack;
 PImage holeFront;
 
@@ -27,7 +29,9 @@ void setup() {
     holeBack,
     holeFront,
     targetPositive,
-    targetNegative
+    targetNegative,
+    positiveFadeout,
+    negativeFadeout
   );
   enterNameHandler = new EnterNameHandler();
   highscoresHandler = new HighscoresHandler();
@@ -134,8 +138,10 @@ void keyPressedEnterName() {
 }
 
 void loadImages() {
-  targetPositive = loadImage("spritesheet_cheems_evil.png");
-  targetNegative = loadImage("spritesheet_cheems_normal.png");
+  targetPositive = loadImage("spritesheet_cheems_evil_movement.png");
+  targetNegative = loadImage("spritesheet_cheems_normal_movement.png");
+  positiveFadeout = loadImage("spritesheet_cheems_evil_fadeout.png");
+  negativeFadeout = loadImage("spritesheet_cheems_normal_fadeout.png");
   holeBack = loadImage("hole_back.png");
   holeFront = loadImage("hole_front.png");
 }

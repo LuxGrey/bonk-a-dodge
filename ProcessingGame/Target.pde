@@ -38,17 +38,23 @@ class Target {
 
   PImage targetPositive;
   PImage targetNegative;
+  PImage positiveFadeout;
+  PImage negativeFadeout;
   PImage holeBack;
   PImage holeFront;
   PImage activeSprite;
+  PImage activeSpriteFadeout;
 
-  Target(PVector position, PImage holeBack, PImage holeFront, PImage targetPositive, PImage targetNegative) {
+  Target(PVector position, PImage holeBack, PImage holeFront, PImage targetPositive, PImage targetNegative, PImage positiveFadeout, PImage negativeFadeout) {
     this.position = position;
     this.holeBack = holeBack;
     this.holeFront = holeFront;
     this.targetPositive = targetPositive;
     this.targetNegative = targetNegative;
+    this.positiveFadeout = positiveFadeout;
+    this.negativeFadeout = negativeFadeout;
     this.activeSprite = null;
+    this.activeSpriteFadeout = null;
   }
 
   /**
@@ -59,6 +65,7 @@ class Target {
     targetState = TargetState.INACTIVE;
     isNegativeTarget = false;
     activeSprite = targetPositive;
+    activeSpriteFadeout = positiveFadeout;
     timeOfNextActivation = millis() + (int)random(MIN_WAIT_ACTIVATION_START, MAX_WAIT_ACTIVATION_START);
   }
 
@@ -91,6 +98,7 @@ class Target {
       int spriteOffsetMovement = AMOUNT_SPRITES_MOVEMENT - 1;
       int timeSinceActivation = millis() - timeOfLastActivation;
       if (timeSinceActivation < DURATION_ENTERING) {
+        // target is entering
         spriteOffsetMovement = timeSinceActivation / DURATION_SPRITE_ENTERING;
       } else if (timeSinceActivation > DURATION_ACTIVE - DURATION_LEAVING) {
         // target is leaving
@@ -110,6 +118,13 @@ class Target {
       }
       break;
     case HIT:
+      int timeSinceHit = millis() - timeOfLastHit;
+      if (timeSinceHit < DURATION_LEAVING) {
+        int spriteOffsetFadeout = timeSinceHit / DURATION_SPRITE_LEAVING;
+        PImage spriteFadeout = activeSpriteFadeout.get(0, SPRITE_HEIGHT * spriteOffsetFadeout, SPRITE_WIDTH, SPRITE_HEIGHT);
+        image(spriteFadeout, position.x, position.y);
+      }
+    
       if ((this.timeOfLastHit + DURATION_HIT) < millis()) {
         changeState(TargetState.INACTIVE);
       }
@@ -133,6 +148,7 @@ class Target {
       // 1 in 10 chance of being negative target
       isNegativeTarget = (int)random(8) == 0;
       activeSprite = isNegativeTarget ? targetNegative : targetPositive;
+      activeSpriteFadeout = isNegativeTarget ? negativeFadeout : positiveFadeout;
       this.timeOfNextActivation = millis() + (int)random(MIN_WAIT_ACTIVATION, MAX_WAIT_ACTIVATION);
       break;
     }
