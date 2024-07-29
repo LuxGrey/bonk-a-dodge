@@ -10,19 +10,12 @@ class GameplayHandler {
   Target[] targets;
   Hud hud;
 
-  GameplayHandler(
-    PImage holeBack,
-    PImage holeFront,
-    PImage targetPositive,
-    PImage targetNegative,
-    PImage positiveFadeout,
-    PImage negativeFadeout
-  ) {
+  GameplayHandler() {
     int amountTargets = AMOUNT_TARGET_ROWS * AMOUNT_TARGET_COLUMNS;
     PVector[] targetPositions = buildTargetPositions();
     targets = new Target[amountTargets];
     for (int i = 0; i < targets.length; ++i) {
-      targets[i] = new Target(targetPositions[i], holeBack, holeFront, targetPositive, targetNegative, positiveFadeout, negativeFadeout);
+      targets[i] = new Target(targetPositions[i]);
     }
     hud = new Hud();
   }

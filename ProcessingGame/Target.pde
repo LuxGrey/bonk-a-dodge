@@ -36,23 +36,11 @@ class Target {
   int timeOfNextActivation;
   boolean isNegativeTarget;
 
-  PImage targetPositive;
-  PImage targetNegative;
-  PImage positiveFadeout;
-  PImage negativeFadeout;
-  PImage holeBack;
-  PImage holeFront;
   PImage activeSprite;
   PImage activeSpriteFadeout;
 
-  Target(PVector position, PImage holeBack, PImage holeFront, PImage targetPositive, PImage targetNegative, PImage positiveFadeout, PImage negativeFadeout) {
+  Target(PVector position) {
     this.position = position;
-    this.holeBack = holeBack;
-    this.holeFront = holeFront;
-    this.targetPositive = targetPositive;
-    this.targetNegative = targetNegative;
-    this.positiveFadeout = positiveFadeout;
-    this.negativeFadeout = negativeFadeout;
     this.activeSprite = null;
     this.activeSpriteFadeout = null;
   }
@@ -64,8 +52,8 @@ class Target {
   void init() {
     targetState = TargetState.INACTIVE;
     isNegativeTarget = false;
-    activeSprite = targetPositive;
-    activeSpriteFadeout = positiveFadeout;
+    activeSprite = ProcessingGame.images.targetPositive;
+    activeSpriteFadeout = ProcessingGame.images.positiveFadeout;
     timeOfNextActivation = millis() + (int)random(MIN_WAIT_ACTIVATION_START, MAX_WAIT_ACTIVATION_START);
   }
 
@@ -90,7 +78,7 @@ class Target {
 
   void render() {
     imageMode(CENTER);
-    image(holeBack, position.x, position.y);
+    image(ProcessingGame.images.holeBack, position.x, position.y);
     
     switch (this.targetState) {
     case ACTIVE:
@@ -131,7 +119,7 @@ class Target {
       break;
     }
     
-    image(holeFront, position.x, position.y);
+    image(ProcessingGame.images.holeFront, position.x, position.y);
   }
 
   void changeState(TargetState newState) {
@@ -147,8 +135,8 @@ class Target {
 
       // 1 in 10 chance of being negative target
       isNegativeTarget = (int)random(8) == 0;
-      activeSprite = isNegativeTarget ? targetNegative : targetPositive;
-      activeSpriteFadeout = isNegativeTarget ? negativeFadeout : positiveFadeout;
+      activeSprite = isNegativeTarget ? ProcessingGame.images.targetNegative : ProcessingGame.images.targetPositive;
+      activeSpriteFadeout = isNegativeTarget ? ProcessingGame.images.negativeFadeout : ProcessingGame.images.positiveFadeout;
       this.timeOfNextActivation = millis() + (int)random(MIN_WAIT_ACTIVATION, MAX_WAIT_ACTIVATION);
       break;
     }

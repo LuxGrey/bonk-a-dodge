@@ -1,6 +1,11 @@
 static final int FRAME_RATE = 60;
 
 /**
+ Allows global access to all required images
+ */
+static ImageCollection images;
+
+/**
  Stores the current state of the game in terms of what should be drawn, what the current options for interaction are and what logic should be run
  */
 GameState gameState;
@@ -10,29 +15,15 @@ GameplayHandler gameplayHandler;
 EnterNameHandler enterNameHandler;
 HighscoresHandler highscoresHandler;
 
-PImage targetPositive;
-PImage targetNegative;
-PImage positiveFadeout;
-PImage negativeFadeout;
-PImage holeBack;
-PImage holeFront;
-
 void setup() {
   size(1500, 1000);
   frameRate = FRAME_RATE;
-  
-  loadImages();
+
+  images = new ImageCollection();
 
   // create handlers for different game states
   mainMenuHandler = new MainMenuHandler();
-  gameplayHandler = new GameplayHandler(
-    holeBack,
-    holeFront,
-    targetPositive,
-    targetNegative,
-    positiveFadeout,
-    negativeFadeout
-  );
+  gameplayHandler = new GameplayHandler();
   enterNameHandler = new EnterNameHandler();
   highscoresHandler = new HighscoresHandler();
 
@@ -135,13 +126,4 @@ void keyPressedEnterName() {
     // do nothing
     break;
   }
-}
-
-void loadImages() {
-  targetPositive = loadImage("spritesheet_cheems_evil_movement.png");
-  targetNegative = loadImage("spritesheet_cheems_normal_movement.png");
-  positiveFadeout = loadImage("spritesheet_cheems_evil_fadeout.png");
-  negativeFadeout = loadImage("spritesheet_cheems_normal_fadeout.png");
-  holeBack = loadImage("hole_back.png");
-  holeFront = loadImage("hole_front.png");
 }
