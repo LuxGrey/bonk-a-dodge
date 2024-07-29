@@ -19,8 +19,6 @@ class Target {
   private static final int MAX_WAIT_ACTIVATION_START = 6000;
   // how long a target will remain in an active state before returning to inactive if it is not hit
   private static final int DURATION_ACTIVE = 1000;
-  // how long a target will be in a hit state before returning to inactive
-  private static final int DURATION_HIT = 500;
 
   // constants for target sprite animations
   // amount of different sprites for target animations

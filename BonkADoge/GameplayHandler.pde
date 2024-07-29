@@ -7,6 +7,9 @@ class GameplayHandler {
   private static final int AMOUNT_TARGET_COLUMNS = 3;
   private static final int DISTANCE_TARGETS_HORIZONTAL = 400;
   private static final int DISTANCE_TARGETS_VERTICAL = 300;
+  private static final String MESSAGE_HIT_POSITIVE = "hitPositive";
+  private static final String MESSAGE_HIT_NEGATIVE = "hitNegative";
+  private static final String MESSAGE_MISS = "miss";
 
   Target[] targets;
   Hud hud;
@@ -63,11 +66,17 @@ class GameplayHandler {
     for (Target target : targets) {
       if (target.checkHit(mouseVector)) {
         this.hud.score += target.getPointsForHit();
+        
+        String message = target.isNegativeTarget ? MESSAGE_HIT_NEGATIVE : MESSAGE_HIT_POSITIVE;
+        BonkADoge.sendOscMessage(new OscMessage(message));
 
         // skip checking remaining targets since it is unnecessary
-        break;
+        return;
       }
     }
+    
+    // no target was hit
+    BonkADoge.sendOscMessage(new OscMessage(MESSAGE_MISS));
   }
 
   /**
