@@ -1,5 +1,3 @@
-static final int FRAME_RATE = 60;
-
 /**
  Allows global access to all required images
  */
@@ -17,8 +15,9 @@ HighscoresHandler highscoresHandler;
 
 void setup() {
   size(1500, 1000);
-  frameRate = FRAME_RATE;
+  frameRate = 60;
 
+  // create image collection and load images
   images = new ImageCollection();
 
   // create handlers for different game states
@@ -51,10 +50,10 @@ void draw() {
 }
 
 /**
- Draw gameplay and execute gameplay logic.
+ Draw the gameplay screen and execute gameplay logic.
  Switch to the "enter name" screen when a gameplay round is over.
  */
-void drawGameplay() {
+private void drawGameplay() {
   GameState requestedState = gameplayHandler.render();
   switch (requestedState) {
   case ENTERNAME:
@@ -83,8 +82,11 @@ void mousePressed() {
   }
 }
 
-void mousePressedMainMenu() {
-  // clicking buttons in the main menu causes game state changes
+/**
+ Handles mouse clicks in the main menu screen.
+ Clicking buttons in that screen can cause game state changes.
+ */
+private void mousePressedMainMenu() {
   GameState requestedState = mainMenuHandler.handleMousePressed();
   switch(requestedState) {
   case GAMEPLAY:
@@ -92,6 +94,7 @@ void mousePressedMainMenu() {
     gameState = GameState.GAMEPLAY;
     break;
   case SHOWHIGHSCORES:
+    // return to the main menu upon clicking anywhere
     gameState = GameState.SHOWHIGHSCORES;
     break;
   default:
@@ -115,7 +118,11 @@ void keyPressed() {
   }
 }
 
-void keyPressedEnterName() {
+/**
+ Delegate to EnterNameHandler for handling key presses and proceed to next game state
+ when player name was entered.
+ */
+private void keyPressedEnterName() {
   GameState requestedState = enterNameHandler.handleKeyPressed();
   switch(requestedState) {
   case SHOWHIGHSCORES:

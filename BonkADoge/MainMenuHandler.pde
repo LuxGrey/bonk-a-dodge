@@ -12,7 +12,7 @@ class MainMenuHandler {
       500,
       70
     );
-    
+
     showHighscoresButton = new Button(
       new PVector(width/2, 600),
       "Show highscores",
@@ -21,8 +21,10 @@ class MainMenuHandler {
     );
   }
 
+  /**
+   Draws main menu with interactive buttons
+   */
   void render() {
-    // draw background
     // TODO draw proper background
     background(120, 120, 120);
 
@@ -31,9 +33,7 @@ class MainMenuHandler {
   }
 
   /**
-   In the main menu, a mouse press can cause a game state change when a button is clicked.
-   As such, the method returns the new game state after a mouse press.
-   If no button was clicked, returns the current game state.
+   Checks if a button was pressed and return the appropriate new game state
    */
   GameState handleMousePressed() {
     PVector mousePosition =  new PVector(mouseX, mouseY);
@@ -43,6 +43,7 @@ class MainMenuHandler {
       return GameState.SHOWHIGHSCORES;
     }
 
+    // remain in current game state
     return GameState.MAINMENU;
   }
 }

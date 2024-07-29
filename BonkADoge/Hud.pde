@@ -1,5 +1,5 @@
 /**
- Instances of this class are used to draw the HUD during gameplay,
+ Used to draw the HUD during gameplay,
  which includes the current player score and remaining time.
  */
 class Hud {
@@ -10,7 +10,7 @@ class Hud {
   int timeOfLastTick;
 
   /**
-   This method should be called right before every every gameplay round to
+   This method should be called right before every gameplay round to
    reset this instance to its initial state.
    */
   void init() {
@@ -28,7 +28,7 @@ class Hud {
   /**
    Render current score in upper right corner
    */
-  void renderScore() {
+  private void renderScore() {
     textSize(50);
     textAlign(RIGHT, TOP);
     fill(0);
@@ -38,7 +38,7 @@ class Hud {
   /**
    Render countdown in the upper left corner
    */
-  void renderCountdown() {
+  private void renderCountdown() {
     textSize(50);
     textAlign(LEFT, TOP);
     fill(0);
@@ -46,13 +46,13 @@ class Hud {
   }
 
   /**
-   Decrements countdown each second until it reaches 0
+   Decrements countdown every second until it reaches 0
    */
-  void updateCountdown() {
+  private void updateCountdown() {
     if (millis() >= timeOfLastTick + 1000 && countdown > 0) {
       // one second interval has passed, update countdown
       timeOfLastTick = millis();
-      countdown--;
+      --countdown;
     }
   }
 }

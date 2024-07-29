@@ -1,3 +1,6 @@
+/**
+ Responsible for displaying player highscores as well as reading them from and writing them to a file.
+ */
 class HighscoresHandler {
   private static final String FILE_NAME_HIGHSCORES = "highscores.csv";
   private static final String COLUMN_NAME_SCORE = "score";
@@ -6,10 +9,15 @@ class HighscoresHandler {
 
   Table highscores;
 
+  /**
+   Display highscores of best players in order.
+   */
   void render() {
     // TODO use proper background
     background(120, 120, 120);
 
+    // TODO adjust text color, size and positions
+    //  make left-aligned column for player names and right-aligned column for scores
     textSize(30);
     for (int i = 0; i < highscores.getRowCount(); i++) {
       String playerName = highscores.getRow(i).getString(COLUMN_NAME_PLAYER_NAME);
@@ -26,7 +34,7 @@ class HighscoresHandler {
     if (highscores == null) {
       // file was not found, initialize new highscores table
       println("Initializing new highscores table");
-      highscores =  new Table();
+      highscores = new Table();
       highscores.addColumn(COLUMN_NAME_PLAYER_NAME);
       highscores.addColumn(COLUMN_NAME_SCORE);
     }
@@ -43,6 +51,7 @@ class HighscoresHandler {
     row.setString(COLUMN_NAME_PLAYER_NAME, playerName);
     row.setInt(COLUMN_NAME_SCORE, score);
     highscores.sortReverse(COLUMN_NAME_SCORE);
+    // remove highscores that number beyond max amount
     while (highscores.getRowCount() > MAX_AMOUNT_HIGHSCORES) {
       highscores.removeRow(highscores.getRowCount()-1);
     }

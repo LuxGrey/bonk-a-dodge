@@ -3,9 +3,10 @@
  when the mouse cursor hovers over it and can detect when it was clicked.
  */
 class Button {
-  // The position of a button is oriented at its center
+  /**
+   The position of a button is oriented at its center
+   */
   PVector position;
-  // The text that is written on the button
   String buttonText;
   int buttonWidth;
   int buttonHeight;
@@ -18,17 +19,17 @@ class Button {
   }
 
   void render() {
-    rectMode(CENTER);
-
+    // draw button
     // button changes color in reaction to being hovered over
     if (isHoveredOver(new PVector(mouseX, mouseY))) {
       fill(108, 122, 175);
     } else {
       fill(64, 87, 175);
     }
-
+    rectMode(CENTER);
     rect(position.x, position.y, buttonWidth, buttonHeight);
 
+    // draw button text
     textAlign(CENTER, CENTER);
     textSize(50);
     fill(0);
