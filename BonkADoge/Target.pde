@@ -41,6 +41,7 @@ class Target {
   PVector position;
   TargetState targetState;
   boolean isNegativeTarget;
+  HitPoints hitPoints;
 
   // various timestamps
   int timeOfLastActivation;
@@ -51,6 +52,7 @@ class Target {
   PImage spriteSheetFadeout;
 
   Target(PVector position) {
+    hitPoints = new HitPoints();
     this.position = position;
     this.spriteSheetMovement = null;
     this.spriteSheetFadeout = null;
@@ -76,6 +78,7 @@ class Target {
   boolean checkHit(PVector mousePosition) {
     if (this.targetState == TargetState.ACTIVE
       && isWithinHitbox(mousePosition)) {
+      hitPoints.init(mousePosition, getPointsForHit());
       changeState(TargetState.HIT);
       return true;
     }
@@ -138,6 +141,9 @@ class Target {
         int spriteOffsetFadeout = timeSinceHit / DURATION_FRAME_FADEOUT;
         PImage spriteFadeout = spriteSheetFadeout.get(0, SPRITE_HEIGHT * spriteOffsetFadeout, SPRITE_WIDTH, SPRITE_HEIGHT);
         image(spriteFadeout, position.x, position.y);
+
+        // draw points received for hit
+        hitPoints.render();
       }
 
       if ((this.timeOfLastHit + DURATION_FADEOUT) < millis()) {
