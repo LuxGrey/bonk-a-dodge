@@ -51,6 +51,7 @@ void setup() {
   volumeHandler = new VolumeHandler();
 
   highscoresHandler.loadHighscores();
+  // reset volume
   volumeHandler.sendUpdateVolumeMessage();
   // start default background music
   sendOscMessage(new OscMessage(MESSAGE_BGM_DEFAULT));
