@@ -10,6 +10,8 @@ class ImageCollection {
   PImage targetNegativeFadeout;
   PImage holeBack;
   PImage holeFront;
+  PImage exampleTargetPositive;
+  PImage exampleTargetNegative;
 
   ImageCollection() {
     loadImages();
@@ -23,5 +25,7 @@ class ImageCollection {
     targetNegativeFadeout = loadImage("spritesheet_cheems_normal_fadeout.png");
     holeBack = loadImage("hole_back.png");
     holeFront = loadImage("hole_front.png");
+    exampleTargetPositive = loadImage("example_cheems_evil.png");
+    exampleTargetNegative = loadImage("example_cheems_normal.png");
   }
 }

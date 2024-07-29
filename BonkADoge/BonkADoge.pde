@@ -21,6 +21,7 @@ MainMenuHandler mainMenuHandler;
 GameplayHandler gameplayHandler;
 EnterNameHandler enterNameHandler;
 HighscoresHandler highscoresHandler;
+HowToPlayHandler howToPlayHandler;
 VolumeHandler volumeHandler;
 
 /**
@@ -46,6 +47,7 @@ void setup() {
   gameplayHandler = new GameplayHandler();
   enterNameHandler = new EnterNameHandler();
   highscoresHandler = new HighscoresHandler();
+  howToPlayHandler = new HowToPlayHandler();
   volumeHandler = new VolumeHandler();
 
   highscoresHandler.loadHighscores();
@@ -70,6 +72,9 @@ void draw() {
     break;
   case SHOWHIGHSCORES:
     highscoresHandler.render();
+    break;
+  case HOWTOPLAY:
+    howToPlayHandler.render();
     break;
   default:
     // do nothing
@@ -108,7 +113,10 @@ void mousePressed() {
     mousePressedMainMenu();
     break;
   case SHOWHIGHSCORES:
+  case HOWTOPLAY:
+    // return to the main menu upon clicking anywhere
     gameState = GameState.MAINMENU;
+    break;
   default:
     // do nothing
     break;
@@ -129,11 +137,13 @@ private void mousePressedMainMenu() {
     gameState = GameState.GAMEPLAY;
     break;
   case SHOWHIGHSCORES:
-    // return to the main menu upon clicking anywhere
     gameState = GameState.SHOWHIGHSCORES;
     break;
+  case HOWTOPLAY:
+    gameState = GameState.HOWTOPLAY;
+    break;
   case EXITGAME:
-    // close the program
+    // peform some clean up and close the program
     exit();
   default:
     // do nothing
@@ -147,6 +157,7 @@ void keyPressed() {
     keyPressedEnterName();
     break;
   case SHOWHIGHSCORES:
+  case HOWTOPLAY:
     // return to the main menu upon pressing any key
     gameState = GameState.MAINMENU;
     break;

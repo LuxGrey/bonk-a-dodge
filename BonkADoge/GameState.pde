@@ -6,5 +6,6 @@ enum GameState {
   ENTERNAME,
   MAINMENU,
   SHOWHIGHSCORES,
+  HOWTOPLAY,
   EXITGAME
 }

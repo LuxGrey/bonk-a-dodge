@@ -4,6 +4,7 @@
 class MainMenuHandler {
   Button startGameplayButton;
   Button showHighscoresButton;
+  Button showHowToPlayButton;
   Button exitButton;
 
   MainMenuHandler() {
@@ -13,16 +14,23 @@ class MainMenuHandler {
       500,
       70
     );
-
-    showHighscoresButton = new Button(
+    
+    showHowToPlayButton = new Button(
       new PVector(width/2, 550),
+      "How to play",
+      500,
+      70
+    );
+    
+    showHighscoresButton = new Button(
+      new PVector(width/2, 700),
       "Show highscores",
       500,
       70
     );
     
     exitButton = new Button(
-      new PVector(width/2, 700),
+      new PVector(width/2, 850),
       "Exit",
       500,
       70
@@ -36,7 +44,8 @@ class MainMenuHandler {
     background(BonkADoge.images.grassBackground);
 
     startGameplayButton.render();
-    showHighscoresButton.render();
+    showHowToPlayButton.render();
+        showHighscoresButton.render();
     exitButton.render();
   }
 
@@ -47,6 +56,8 @@ class MainMenuHandler {
     PVector mousePosition =  new PVector(mouseX, mouseY);
     if (startGameplayButton.isHoveredOver(mousePosition)) {
       return GameState.GAMEPLAY;
+    } else if (showHowToPlayButton.isHoveredOver(mousePosition)) {
+      return GameState.HOWTOPLAY;
     } else if (showHighscoresButton.isHoveredOver(mousePosition)) {
       return GameState.SHOWHIGHSCORES;
     } else if (exitButton.isHoveredOver(mousePosition)) {
